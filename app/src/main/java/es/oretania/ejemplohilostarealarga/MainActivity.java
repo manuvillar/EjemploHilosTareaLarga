@@ -3,6 +3,7 @@ package es.oretania.ejemplohilostarealarga;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.textView.setTextSize(24);
+        binding.textView.setGravity(Gravity.CENTER);
 
         binding.botonTareaLarga.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,14 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                         //Para modificar valores de la interfaz se tiene que hacer
-                        // en hilo principal de esta manera.
+                        // en hilo principal que es el que ha creado esa vista
+                        // Esto se hace de esta manera.
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 binding.textView.setText("Texto modificado por el hilo");
                             }
                         });
-                        Toast.makeText(v.getContext(), "Hilo acabado", Toast.LENGTH_SHORT).show();
+                        //Más correcto es usar la clase AsyncTask
                     }
                 }).start();
             }
